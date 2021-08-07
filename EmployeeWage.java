@@ -5,6 +5,7 @@ import java.util.Random;
 public class EmployeeWage {
 	static int FULLTIME_HOUR = 8;
 	public static int hours;
+	static int WAGE_PER_HOUR = 200;
 	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Employee Wage Computation Program");
@@ -21,5 +22,9 @@ public class EmployeeWage {
 			hours = FULLTIME_HOUR;
 			break;
 		}
+	}
+	
+	public static int dailyWage(int h) {
+		return h * WAGE_PER_HOUR;
 	}
 }
