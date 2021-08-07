@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class EmployeeWage {
 	static int FULLTIME_HOUR = 8;
+	static int PARTTIME_HOUR = 4;
 	public static int hours;
 	static int WAGE_PER_HOUR = 200;
 	
@@ -19,6 +20,9 @@ public class EmployeeWage {
 			hours = 0;
 			break;
 		case 1:
+			hours = PARTTIME_HOUR;
+			break;
+		case 2:
 			hours = FULLTIME_HOUR;
 			break;
 		}
