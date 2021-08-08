@@ -1,33 +1,67 @@
 package Day10_EmployeeWage;
 
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class EmployeeWage {
+	static ArrayList<Emp> emp = new ArrayList<Emp>();
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to Employee Wage Computation Program");
-		Emp e1 = new Emp("TATA", 20, 100, 200);
-		System.out.println("Monthly Wage : " + e1.monthlyWage());
+		int ans = 1;
+		Scanner scan = new Scanner(System.in);
+		while (ans == 1) {
+			System.out.println("Enter Details-----");
+			Emp p = new Emp();
+			emp.add(p);
+			System.out.println("Want to Add more? Enter 1 for Yes, 2 for No");
+			ans = scan.nextInt();
+		}
+		for (int i = 0; i < emp.size(); i++) {
+
+			System.out.printf("Company: %-10s Total Wage: %d", emp.get(i).company,  emp.get(i).TotalWage);
+		}
+//		System.out.println("Monthly Wage : " + e1.monthlyWage());
 	}
 }
 
-class Emp {
-	String company;
-	static int WAGE_PER_HOUR = 200;
-	static int FULLTIME_HOUR = 8;
-	static int PARTTIME_HOUR = 4;
-	static int WORKING_DAYS = 20;
-	static int TOTAL_WORKING_HOURS = 100;
-	public static int hours;
-	public static int TotalWage, totalHours = 0;
+interface EmployeeBuilder {
 
-	Emp(String company, int WORKING_DAYS, int TOTAL_WORKING_HOURS, int WAGE_PER_HOUR) {
-		this.company = company;
-		this.WORKING_DAYS = WORKING_DAYS;
-		this.TOTAL_WORKING_HOURS = TOTAL_WORKING_HOURS;
-		this.WAGE_PER_HOUR = WAGE_PER_HOUR;
+	public void isPresent();
+
+	public int dailyWage(int h);
+
+	public int monthlyWage();
+}
+
+class Emp implements EmployeeBuilder {
+
+	String company;
+	int WAGE_PER_HOUR = 200;
+	int FULLTIME_HOUR = 8;
+	int PARTTIME_HOUR = 4;
+	int WORKING_DAYS = 20;
+	int TOTAL_WORKING_HOURS = 100;
+	public int hours;
+	public int TotalWage, totalHours = 0;
+	ArrayList<Integer> ArrOfDailyWage = new ArrayList<Integer>();
+
+	Emp() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Company Name: ");
+		this.company = sc.next();
+		System.out.println("Enter Working Days: ");
+		this.WORKING_DAYS = sc.nextInt();
+		System.out.println("Enter Total Working Hours: ");
+		this.TOTAL_WORKING_HOURS = sc.nextInt();
+		System.out.println("Enter Wage Per Hour: ");
+		this.WAGE_PER_HOUR = sc.nextInt();
+		this.monthlyWage();
+
 	}
 
-	public static void isPresent() {
+	public void isPresent() {
 		Random ran = new Random();
 		int isPresent = ran.nextInt(3);
 		switch (isPresent) {
@@ -43,7 +77,8 @@ class Emp {
 		}
 	}
 
-	public static int dailyWage(int h) {
+	public int dailyWage(int h) {
+		ArrOfDailyWage.add(h * WAGE_PER_HOUR);
 		return h * WAGE_PER_HOUR;
 	}
 
@@ -54,9 +89,14 @@ class Emp {
 			TotalWage += dailyWage(hours);
 			totalHours += hours;
 			i++;
-			System.out.println("Day" + i + ": " + dailyWage(hours));
+			//System.out.println("Day" + i + ": " + dailyWage(hours));
 		}
 
 		return TotalWage;
+	}
+
+	public void empBuilder(Emp e) {
+		System.out.println("Company: " + e.company);
+		System.out.println("Total Wage: " + e.TotalWage);
 	}
 }
